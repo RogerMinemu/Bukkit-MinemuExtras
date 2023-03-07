@@ -1,0 +1,10 @@
+name: MinemuExtras
+description: Minemu Extras
+author: RogerMinemu
+main: net.minemu.extras.Main
+version: 1.0.0
+url: https://minemu.es
+commands:
+  example:
+    aliases: ["ex"]
+    description: "Minemu Extras Bukkit Plugin."
