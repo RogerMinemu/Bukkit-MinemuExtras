@@ -16,12 +16,13 @@ public class Main extends JavaPlugin{
 
     private Economy economy;
     private Connection connection;
+    public FileConfiguration config;
 
     public void onEnable()
     {
         // Config Load
         File configFile = new File(getDataFolder(), "config.yml");
-        FileConfiguration config = YamlConfiguration.loadConfiguration(configFile);
+        config = YamlConfiguration.loadConfiguration(configFile);
 
         String host = config.getString("mysql.host");
         int port = config.getInt("mysql.port");
@@ -48,8 +49,8 @@ public class Main extends JavaPlugin{
 
         // Success Loading
         System.out.println("Módulo: Async Minecoins CARGADO - Vault");
-        getServer().getPluginManager().registerEvents(new PlayerQuitListener(economy, connection), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(economy, connection), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(economy, connection, config), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(economy, connection, config), this); 
     }
 
     private boolean setupEconomy() {

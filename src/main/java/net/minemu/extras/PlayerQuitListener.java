@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import net.milkbowl.vault.economy.Economy;
+
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +15,13 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerQuitListener implements Listener {
     private Economy economy;
     private Connection connection;
+    private FileConfiguration config;
+
+    public PlayerQuitListener(Economy economy, Connection connection, FileConfiguration config) {
+        this.economy = economy;
+        this.connection = connection;
+        this.config = config;
+    }
 
     public PlayerQuitListener(Economy economy, Connection connection) {
         this.economy = economy;
@@ -26,7 +35,7 @@ public class PlayerQuitListener implements Listener {
 
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO survival_asyncmcs (username, minecoins) VALUES (?, ?);");
+                    "INSERT INTO " + config.getString("mysql.table") + "_asyncmcs (username, minecoins) VALUES (?, ?);");
             statement.setString(1, player.getName());
             statement.setDouble(2, balance);
 
